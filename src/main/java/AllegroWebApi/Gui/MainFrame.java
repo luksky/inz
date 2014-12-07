@@ -5,8 +5,11 @@ import java.awt.Dimension;
 import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +27,8 @@ public class MainFrame {
 	JTable CategoryList;
 	TextField CategoryId;
 	JScrollPane CategoryListScroll;
+	JButton ItemListRespRefresh;
+	
 
 	App AllegroFunctionality;
 	ArrayList<ArrayList<String>> ItemListResp;
@@ -31,6 +36,28 @@ public class MainFrame {
 	String[][] data;
 	String selectedRow;
 
+	public JButton getItemListRespRefresh() {
+		ItemListRespRefresh=new JButton("> > >");
+		ItemListRespRefresh.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				Object[] columnNames = { "Nazwa kategorii", "Ilośc przedmiotów",
+				"Id kategorii" };
+				ItemListResp = AllegroFunctionality.doGetItemsList(CategoryId.getText(), Integer.parseInt(CategoryId.getText()));
+				data = new String[ItemListResp.get(0).size()][ItemListResp.size()];
+				for (int i = 0; i < ItemListResp.get(0).size(); i++) {
+					for (int j = 0; j < ItemListResp.size(); j++) {
+						data[i][j] = ItemListResp.get(j).get(i);
+					}
+				}
+				CategoryList = new JTable(data, columnNames);
+			}
+		});
+		return ItemListRespRefresh;
+	}
+
+	
 	public JScrollPane getCategoryListScroll() {
 		CategoryListScroll = new JScrollPane(getCategoryList());
 		return CategoryListScroll;
@@ -46,21 +73,22 @@ public class MainFrame {
 		MainPanel = new JPanel();
 		MainPanel.setLayout(new BorderLayout());
 		MainPanel.add(getCategoryId(), BorderLayout.PAGE_START);
+		MainPanel.add(getItemListRespRefresh(), BorderLayout.PAGE_START);
 		MainPanel.add(getCategoryListScroll(), BorderLayout.CENTER);
 		return MainPanel;
 	}
 
 	public JTable getCategoryList() {
-		Object[] columnNames = { "Nazwa kategorii", "Ilośc przedmiotów",
-				"Id kategorii" };
 
+		Object[] columnNames = { "Nazwa kategorii", "Ilośc przedmiotów",
+		"Id kategorii" };
 		data = new String[ItemListResp.get(0).size()][ItemListResp.size()];
 		for (int i = 0; i < ItemListResp.get(0).size(); i++) {
 			for (int j = 0; j < ItemListResp.size(); j++) {
 				data[i][j] = ItemListResp.get(j).get(i);
 			}
-
 		}
+
 		CategoryList = new JTable(data, columnNames);
 		CategoryList.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
@@ -68,10 +96,10 @@ public class MainFrame {
 					public void valueChanged(ListSelectionEvent arg0) {
 						// TODO Auto-generated method stub
 
-						selectedRow = (String) getCategoryList().getValueAt(
+						selectedRow = (String) CategoryList.getValueAt(
 								CategoryList.getSelectedRow(), 2);
 						System.out.println(selectedRow);
-						getCategoryId().repaint();
+						CategoryId.setText(selectedRow);
 						/*
 						 * tempdata = new
 						 * String[ItemListResp.get(0).size()][ItemListResp
