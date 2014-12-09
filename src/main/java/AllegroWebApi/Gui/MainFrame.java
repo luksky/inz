@@ -17,6 +17,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import AllegroWebApiClient.WebApi.App;
 
@@ -33,17 +37,18 @@ public class MainFrame {
 	App AllegroFunctionality;
 	ArrayList<ArrayList<String>> ItemListResp;
 	String[][] tempdata;
-	String[][] data;
+	Object[][] data;
 	String selectedRow;
 
 	public JButton getItemListRespRefresh() {
 		ItemListRespRefresh=new JButton("> > >");
+		final Object[] columnNames = { "Nazwa kategorii", "Ilośc przedmiotów",
+		"Id kategorii" };
 		ItemListRespRefresh.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				Object[] columnNames = { "Nazwa kategorii", "Ilośc przedmiotów",
-				"Id kategorii" };
+				
 				ItemListResp = AllegroFunctionality.doGetItemsList(CategoryId.getText(), Integer.parseInt(CategoryId.getText()));
 				data = new String[ItemListResp.get(0).size()][ItemListResp.size()];
 				for (int i = 0; i < ItemListResp.get(0).size(); i++) {
@@ -51,9 +56,12 @@ public class MainFrame {
 						data[i][j] = ItemListResp.get(j).get(i);
 					}
 				}
-				CategoryList = new JTable(data, columnNames);
+				TableModel dataModel= new DefaultTableModel(data, columnNames);
+				CategoryList.setModel(dataModel);
+				CategoryList.repaint();
 			}
 		});
+		
 		return ItemListRespRefresh;
 	}
 
@@ -73,8 +81,9 @@ public class MainFrame {
 		MainPanel = new JPanel();
 		MainPanel.setLayout(new BorderLayout());
 		MainPanel.add(getCategoryId(), BorderLayout.PAGE_START);
-		MainPanel.add(getItemListRespRefresh(), BorderLayout.PAGE_START);
+		
 		MainPanel.add(getCategoryListScroll(), BorderLayout.CENTER);
+		MainPanel.add(getItemListRespRefresh(), BorderLayout.PAGE_START);
 		return MainPanel;
 	}
 
@@ -96,9 +105,8 @@ public class MainFrame {
 					public void valueChanged(ListSelectionEvent arg0) {
 						// TODO Auto-generated method stub
 
-						selectedRow = (String) CategoryList.getValueAt(
-								CategoryList.getSelectedRow(), 2);
-						System.out.println(selectedRow);
+							selectedRow = (String) CategoryList.getValueAt(
+									CategoryList.getSelectedRow(), 2);
 						CategoryId.setText(selectedRow);
 						/*
 						 * tempdata = new
@@ -119,6 +127,7 @@ public class MainFrame {
 
 				});
 
+		
 		return CategoryList;
 	}
 
