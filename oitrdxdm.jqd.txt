@@ -1,0 +1,72 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   .classpath
+#	new file:   lib/axis.jar
+#	new file:   lib/commons-beanutils-1.8.3.jar
+#	new file:   lib/commons-collections-3.2.1.jar
+#	new file:   lib/commons-digester-2.1.jar
+#	new file:   lib/commons-discovery-0.2.jar
+#	new file:   lib/commons-logging-1.1.1.jar
+#	new file:   lib/h2-1.4.184.jar
+#	new file:   lib/itext-2.1.7.jar
+#	new file:   lib/itext-pdfa-5.5.4-javadoc.jar
+#	new file:   lib/itext-pdfa-5.5.4-sources.jar
+#	new file:   lib/itext-pdfa-5.5.4.jar
+#	new file:   lib/itext-xtra-5.5.4-javadoc.jar
+#	new file:   lib/itext-xtra-5.5.4-sources.jar
+#	new file:   lib/itext-xtra-5.5.4.jar
+#	new file:   lib/itextpdf-5.5.4-javadoc.jar
+#	new file:   lib/itextpdf-5.5.4-sources.jar
+#	new file:   lib/itextpdf-5.5.4.jar
+#	new file:   lib/jasperreports-6.0.0.jar
+#	new file:   lib/javax.wsdl_1.6.2.v201012040545.jar
+#	new file:   lib/jaxrpc.jar
+#	new file:   lib/jcommon-1.0.15.jar
+#	new file:   lib/jdtcore-3.1.0.jar
+#	new file:   lib/jfreechart-1.0.12.jar
+#	new file:   lib/log4j-1.2.14.jar
+#	new file:   lib/org.apache.commons.logging_1.1.1.v201101211721.jar
+#	new file:   lib/poi-3.6.jar
+#	new file:   lib/saaj.jar
+#	new file:   lib/spring-web-4.1.2.RELEASE-sources.jar
+#	new file:   lib/xml-apis-1.3.02.jar
+#	new file:   out.txt
+#	modified:   src/main/java/AllegroWebApi/Gui/MainFrame.java
+#	new file:   src/main/java/AllegroWebApi/H2Database/DataModelItemAttribs.java
+#	new file:   src/main/java/AllegroWebApi/H2Database/DataModelItemInfo.java
+#	new file:   src/main/java/AllegroWebApi/H2Database/H2Connection.java
+#	new file:   src/main/java/AllegroWebApi/H2Database/ItemAttribsJDBCImpl.java
+#	new file:   src/main/java/AllegroWebApi/H2Database/ItemInfoJDBCImpl.java
+#	new file:   src/main/java/AllegroWebApi/iReportGenerate/Raport.java
+#	new file:   src/main/java/AllegroWebApi/iReportGenerate/RaportQuery.java
+#	modified:   src/main/java/AllegroWebApiClient/WebApi/App.java
+#	modified:   src/main/java/AllegroWebApiClient/WebApi/Main.java
+#	new file:   src/main/java/pl/allegro/webapi/service_php/DurationInfoStruct.java
+#	modified:   src/main/java/pl/allegro/webapi/service_php/ItemInfo.java
+#	new file:   target/classes/AllegroWebApi/Gui/MainFrame$1$1.class
+#	modified:   target/classes/AllegroWebApi/Gui/MainFrame$1.class
+#	modified:   target/classes/AllegroWebApi/Gui/MainFrame$2.class
+#	new file:   target/classes/AllegroWebApi/Gui/MainFrame$3$1.class
+#	new file:   target/classes/AllegroWebApi/Gui/MainFrame$3.class
+#	new file:   target/classes/AllegroWebApi/Gui/MainFrame$4.class
+#	new file:   target/classes/AllegroWebApi/Gui/MainFrame$5.class
+#	modified:   target/classes/AllegroWebApi/Gui/MainFrame.class
+#	new file:   target/classes/AllegroWebApi/H2Database/DataModelItemAttribs.class
+#	new file:   target/classes/AllegroWebApi/H2Database/DataModelItemInfo.class
+#	new file:   target/classes/AllegroWebApi/H2Database/H2Connection.class
+#	new file:   target/classes/AllegroWebApi/H2Database/ItemAttribsJDBCImpl.class
+#	new file:   target/classes/AllegroWebApi/H2Database/ItemInfoJDBCImpl.class
+#	new file:   target/classes/AllegroWebApi/iReportGenerate/Raport.class
+#	new file:   target/classes/AllegroWebApi/iReportGenerate/RaportQuery.class
+#	modified:   target/classes/AllegroWebApiClient/WebApi/App.class
+#	modified:   target/classes/AllegroWebApiClient/WebApi/Main.class
+#	new file:   target/classes/pl/allegro/webapi/service_php/DurationInfoStruct.class
+#	modified:   target/classes/pl/allegro/webapi/service_php/ItemInfo.class
+#	deleted:    target/test-classes/AllegroWebApiClient/WebApi/AppTest.class
+#
+

@@ -1,0 +1,101 @@
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-01-13T18:15:48 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f1abe20-08c8-4e96-9a7c-50807d0494de">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<queryString language="SQL">
+		<![CDATA[Select cast(IA."attribValuesStart" as int) as rok, II."itBuyNowPrice"as cena,  IA2."attribValuesStart" as rodzaj_paliwa
+from "ItemInfo" II
+join "itemAttribs" IA on II."itId" = IA."itId"
+join "itemAttribs" IA2 on II."itId" = IA2."itId"
+join "itemAttribs" IA3 on II."itId" = IA3."itId" 
+where IA."attribName"='Rok produkcji' and IA2."attribName"='Rodzaj paliwa' and (IA2."attribValuesStart"='Diesel' or  IA2."attribValuesStart"='Benzyna') and IA3."attribName"='Uszkodzony' and IA3."attribValuesStart"='Nie'
+group by IA."attribValuesStart", IA2."attribValuesStart", cena
+order by IA."attribValuesStart", IA2."attribValuesStart"]]>
+	</queryString>
+	<field name="ROK" class="java.lang.Integer"/>
+	<field name="CENA" class="java.lang.Integer"/>
+	<field name="RODZAJ_PALIWA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="457" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="-10" width="554" height="89" uuid="70c94ff4-79d7-45ac-af91-270e16ca284c"/>
+				<textElement textAlignment="Center">
+					<font size="31" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Touran - cena rocznika / rodzaj paliwa]]></text>
+			</staticText>
+			<lineChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="87" width="555" height="360" uuid="56125ba0-7555-47dd-867a-a3ffde727ba4"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{RODZAJ_PALIWA}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{ROK}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{CENA}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="160" height="30" uuid="2c18af11-ba10-4a6c-aa6b-595d06e7f02d"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Rocznik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="0" width="180" height="30" uuid="d674d9fb-ebf2-4897-8af5-8ce81fd9a87a"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Cena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="2" width="151" height="30" uuid="c7b8e91a-b8b1-45dc-b870-89d31c2ca8ed"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Rodzaj paliwa]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="160" height="30" uuid="6ebf0170-7a92-4847-bfc6-5310380ae762"/>
+				<textFieldExpression><![CDATA[$F{ROK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="0" width="180" height="30" uuid="e84d0128-9af8-4bc8-8125-7d1ef34380cd"/>
+				<textFieldExpression><![CDATA[$F{CENA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="0" width="151" height="30" uuid="b9d93ede-cc70-4f22-b72b-77c8f7cce257"/>
+				<textFieldExpression><![CDATA[$F{RODZAJ_PALIWA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
+

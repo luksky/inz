@@ -16,7 +16,7 @@ public class Raport {
 	
 	public Raport(){
 		try{
-			JasperDesign jasperDesign = JRXmlLoader.load("F:\\Dropbox\\Private\\MyReports\\Blank_A4_6.jrxml");
+			JasperDesign jasperDesign = JRXmlLoader.load("Raport.jrxml");
 			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 			
 			  Connection conn = null;
