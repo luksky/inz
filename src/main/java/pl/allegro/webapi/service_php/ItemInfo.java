@@ -80,6 +80,8 @@ public class ItemInfo  implements java.io.Serializable {
 
     private java.lang.Integer itIsBrandZone;
 
+    private pl.allegro.webapi.service_php.DurationInfoStruct itDurationInfo;
+
     public ItemInfo() {
     }
 
@@ -119,7 +121,8 @@ public class ItemInfo  implements java.io.Serializable {
            int itEndingInfo,
            int itIsAllegroStandard,
            int itIsNewUsed,
-           java.lang.Integer itIsBrandZone) {
+           java.lang.Integer itIsBrandZone,
+           pl.allegro.webapi.service_php.DurationInfoStruct itDurationInfo) {
            this.itId = itId;
            this.itCountry = itCountry;
            this.itName = itName;
@@ -156,6 +159,7 @@ public class ItemInfo  implements java.io.Serializable {
            this.itIsAllegroStandard = itIsAllegroStandard;
            this.itIsNewUsed = itIsNewUsed;
            this.itIsBrandZone = itIsBrandZone;
+           this.itDurationInfo = itDurationInfo;
     }
 
 
@@ -878,6 +882,26 @@ public class ItemInfo  implements java.io.Serializable {
         this.itIsBrandZone = itIsBrandZone;
     }
 
+
+    /**
+     * Gets the itDurationInfo value for this ItemInfo.
+     * 
+     * @return itDurationInfo
+     */
+    public pl.allegro.webapi.service_php.DurationInfoStruct getItDurationInfo() {
+        return itDurationInfo;
+    }
+
+
+    /**
+     * Sets the itDurationInfo value for this ItemInfo.
+     * 
+     * @param itDurationInfo
+     */
+    public void setItDurationInfo(pl.allegro.webapi.service_php.DurationInfoStruct itDurationInfo) {
+        this.itDurationInfo = itDurationInfo;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof ItemInfo)) return false;
@@ -943,7 +967,10 @@ public class ItemInfo  implements java.io.Serializable {
             this.itIsNewUsed == other.getItIsNewUsed() &&
             ((this.itIsBrandZone==null && other.getItIsBrandZone()==null) || 
              (this.itIsBrandZone!=null &&
-              this.itIsBrandZone.equals(other.getItIsBrandZone())));
+              this.itIsBrandZone.equals(other.getItIsBrandZone()))) &&
+            ((this.itDurationInfo==null && other.getItDurationInfo()==null) || 
+             (this.itDurationInfo!=null &&
+              this.itDurationInfo.equals(other.getItDurationInfo())));
         __equalsCalc = null;
         return _equals;
     }
@@ -1008,6 +1035,9 @@ public class ItemInfo  implements java.io.Serializable {
         _hashCode += getItIsNewUsed();
         if (getItIsBrandZone() != null) {
             _hashCode += getItIsBrandZone().hashCode();
+        }
+        if (getItDurationInfo() != null) {
+            _hashCode += getItDurationInfo().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -1233,6 +1263,13 @@ public class ItemInfo  implements java.io.Serializable {
         elemField.setFieldName("itIsBrandZone");
         elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itIsBrandZone"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("itDurationInfo");
+        elemField.setXmlName(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "itDurationInfo"));
+        elemField.setXmlType(new javax.xml.namespace.QName("https://webapi.allegro.pl/service.php", "DurationInfoStruct"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

@@ -16,11 +16,40 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.apache.axis_1.4.0.v201005080400/lib/axis.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.apache.commons.discovery_0.2.0.v201004190315/lib/commons-discovery-0.2.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/javax.xml.rpc_1.1.0.v201209140446/lib/jaxrpc.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/javax.xml.soap_1.2.0.v201005080501/lib/saaj.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/javax.wsdl_1.6.2.v201012040545.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/axis.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/commons-discovery-0.2.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/h2-1.4.184.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itext-2.1.7.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itextpdf-5.5.4.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itextpdf-5.5.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itextpdf-5.5.4-sources.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itext-pdfa-5.5.4.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itext-pdfa-5.5.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itext-pdfa-5.5.4-sources.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itext-xtra-5.5.4.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itext-xtra-5.5.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/itext-xtra-5.5.4-sources.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/jasperreports-6.0.0.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/javax.wsdl_1.6.2.v201012040545.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/jaxrpc.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/jcommon-1.0.15.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/jdtcore-3.1.0.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/jfreechart-1.0.12.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/org.apache.commons.logging_1.1.1.v201101211721.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/poi-3.6.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/saaj.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/spring-web-4.1.2.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="E:/(())Projects/WebApi/lib/xml-apis-1.3.02.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

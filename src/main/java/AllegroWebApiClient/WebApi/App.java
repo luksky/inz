@@ -2,19 +2,86 @@ package AllegroWebApiClient.WebApi;
 
 import pl.allegro.webapi.service_php.*;
 
-import java.net.URL;
-import java.rmi.Remote;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import javax.xml.rpc.ServiceException;
+
+import AllegroWebApi.H2Database.H2Connection;
+import AllegroWebApi.H2Database.ItemAttribsJDBCImpl;
+import AllegroWebApi.H2Database.ItemInfoJDBCImpl;
 
 public class App {
 
-	boolean doLogin(String userLogin, String userPassword, int countryCode,
-			long localVersion, String webApiKey) {
 
+
+	public ArrayList<ArrayList<String>> doGetCatsData() {
+
+		ServiceServiceLocator allegroWebApiService = new ServiceServiceLocator();
+		ArrayList<ArrayList<String>> doGetCatsDataResp = new ArrayList<ArrayList<String>>();
+		ArrayList<String> CategoryName = new ArrayList<String>();
+		ArrayList<String> CategoryId = new ArrayList<String>();
+		ArrayList<String> CategoryParentId = new ArrayList<String>();
+
+
+		try {
+			ServicePort allegro = allegroWebApiService.getservicePort();
+			DoGetCatsDataRequest doGetCatsData = new DoGetCatsDataRequest();
+			doGetCatsData.setWebapiKey("569a5dcc");
+			doGetCatsData.setCountryId(1);
+
+			DoGetCatsDataResponse doGetCatsDataResponse = allegro
+					.doGetCatsData(doGetCatsData);
+
+			for (int i = 0; i < doGetCatsDataResponse.getCatsList().length; i++) {
+		
+					CategoryName.add(doGetCatsDataResponse.getCatsList()[i].getCatName());
+					CategoryId.add((Integer.toString(doGetCatsDataResponse.getCatsList()[i].getCatId())));
+					CategoryParentId.add((Integer.toString(doGetCatsDataResponse.getCatsList()[i].getCatParent())));
+			}
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		doGetCatsDataResp.add(CategoryName);
+		doGetCatsDataResp.add(CategoryId);
+		doGetCatsDataResp.add(CategoryParentId);
+		return doGetCatsDataResp;
+	}
+	
+	public long doGetLocalVersionValue() {
+
+		long localVersion=0;
+		ServiceServiceLocator allegroWebApiService = new ServiceServiceLocator();
+		try {
+			ServicePort allegro = allegroWebApiService.getservicePort();
+			DoGetCatsDataRequest doGetCatsData = new DoGetCatsDataRequest();
+			doGetCatsData.setWebapiKey("569a5dcc");
+			doGetCatsData.setCountryId(1);
+
+			DoGetCatsDataResponse doGetCatsDataResponse = allegro
+					.doGetCatsData(doGetCatsData);
+			localVersion=doGetCatsDataResponse.getVerKey();
+			System.out.println(localVersion);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return localVersion;
+	}
+	public String doLogin(String userLogin, String userPassword){
+		String sessionHandlePart=null;
+		
 		ServiceServiceLocator allegroWebApiService = new ServiceServiceLocator();
 
 		try {
@@ -22,81 +89,90 @@ public class App {
 			DoLoginRequest doLoginRequest = new DoLoginRequest();
 			doLoginRequest.setUserLogin(userLogin);
 			doLoginRequest.setUserPassword(userPassword);
-			doLoginRequest.setCountryCode(countryCode);
-			doLoginRequest.setLocalVersion(localVersion);
-			doLoginRequest.setWebapiKey(webApiKey);
+			doLoginRequest.setCountryCode(1);
+			doLoginRequest.setLocalVersion(doGetLocalVersionValue());
+			doLoginRequest.setWebapiKey("569a5dcc");
 
 			DoLoginResponse doLoginResponse = allegro.doLogin(doLoginRequest);
-			if (doLoginResponse.getSessionHandlePart() != "") {
-
-				// Identyfikator sesji dla użytkownika jest trzymany w:
-				// doLoginResponse.getSessionHandlePart()
-				System.out.println(doLoginResponse.getSessionHandlePart()
-						+ "\n" + doLoginResponse.getUserId());
-				return true;
-			} else {
-				return false;
-			}
+			sessionHandlePart=doLoginResponse.getSessionHandlePart();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		return false;
-
+		
+		
+		return sessionHandlePart;
+		
 	}
-
-	public ArrayList<ArrayList<String>> doGetItemsList(String ValueItemId, int CategoryParentId) {
+	public ArrayList<Long> doGetItemsList(String CategoryId) {
 
 		ServiceServiceLocator allegroWebApiService = new ServiceServiceLocator();
-		ArrayList<ArrayList<String>> ItemListResp = new ArrayList<ArrayList<String>>();
-		ArrayList<String> CategoryName = new ArrayList<String>();
-		ArrayList<String> CategoryItemsCount = new ArrayList<String>();
-		ArrayList<String> CategoryId = new ArrayList<String>();
+		ArrayList<Long> ItemListResp = new ArrayList<Long>();
 
 		FilterOptionsType[] FOT = new FilterOptionsType[1];
 		FOT[0] = new FilterOptionsType();
 		String FilterValueId[] = new String[1];
-		FilterValueId[0] = ValueItemId;
+		FilterValueId[0]=CategoryId;
 		FOT[0].setFilterValueId(FilterValueId);
-
-		FOT[0].setFilterValueRange(new RangeValueType());
 		FOT[0].setFilterId("category");
 		try {
 			ServicePort allegro = allegroWebApiService.getservicePort();
 			DoGetItemsListRequest doGetitemsList = new DoGetItemsListRequest();
 			doGetitemsList.setCountryId(1);
 			doGetitemsList.setFilterOptions(FOT);
+			
 			doGetitemsList.setResultOffset(0);
-			doGetitemsList.setResultScope(1);
+			doGetitemsList.setResultScope(3);
 			doGetitemsList.setSortOptions(null);
 			doGetitemsList.setWebapiKey("569a5dcc");
-
+			doGetitemsList.setResultSize(1000);
 			DoGetItemsListResponse doGetitemsListResponse = allegro
 					.doGetItemsList(doGetitemsList);
-			CategoriesListType catList = new CategoriesListType();
-			catList = doGetitemsListResponse.getCategoriesList();
-
-			for (int i = 0; i < catList.getCategoriesTree().length; i++) {
-				if (catList.getCategoriesTree()[i].getCategoryParentId() == CategoryParentId) {
-					/*System.out.println(i
-							+ 1
-							+ ". "
-							+ catList.getCategoriesTree()[i].getCategoryName()
-							+ " "
-							+ catList.getCategoriesTree()[i]
-									.getCategoryItemsCount() + " "
-							+ catList.getCategoriesTree()[i].getCategoryId());*/
-					CategoryName.add(catList.getCategoriesTree()[i]
-							.getCategoryName());
-					CategoryItemsCount.add(Integer.toString(catList
-							.getCategoriesTree()[i].getCategoryItemsCount()));
-					CategoryId
-							.add(Integer.toString(catList.getCategoriesTree()[i]
-									.getCategoryId()));
+			
+			for(int i =0;i<doGetitemsListResponse.getItemsList().length;i++){
+				ItemListResp.add(doGetitemsListResponse.getItemsList()[i].getItemId());
+				try {
+					writeFile(doGetitemsListResponse.getItemsList()[i].getItemId());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			int requestIteration=0;
+			
+			while(ItemListResp.size()<doGetitemsListResponse.getItemsCount()){
+				
+				requestIteration++;
+				
+				if(doGetitemsListResponse.getItemsCount()<requestIteration*1000+1000){
+					doGetitemsList.setResultSize(doGetitemsListResponse.getItemsCount()-requestIteration*1000);
+					doGetitemsList.setResultOffset(requestIteration*1000);
+					System.out.println(doGetitemsListResponse.getItemsCount()-requestIteration*1000+" if "+requestIteration);
+				}
+				else{
+					doGetitemsList.setResultOffset(requestIteration*1000);
+					System.out.println("else");
+				}
+				
+				doGetitemsListResponse = allegro
+						.doGetItemsList(doGetitemsList);
+				
+				for(int i =0;i<doGetitemsList.getResultSize();i++){
+					
+					ItemListResp.add(doGetitemsListResponse.getItemsList()[i].getItemId());
+					try {
+						writeFile(doGetitemsListResponse.getItemsList()[i].getItemId());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				}
 			}
+			System.out.println("Pobrano: "+ItemListResp.size()+" elementów");	
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,9 +180,100 @@ public class App {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ItemListResp.add(CategoryName);
-		ItemListResp.add(CategoryItemsCount);
-		ItemListResp.add(CategoryId);
 		return ItemListResp;
 	}
+	public void itemListUpdate(ArrayList<Long> itemsIdList, String sessionHandle){
+
+		ServiceServiceLocator allegroWebApiService = new ServiceServiceLocator();
+		ArrayList<Long> tempItemList = new ArrayList<Long>();
+		new H2Connection();
+		ItemInfoJDBCImpl itemInfoCreation = new ItemInfoJDBCImpl();
+		ItemAttribsJDBCImpl iteamAttribsCreation = new ItemAttribsJDBCImpl();
+		int i = 0;
+		
+		while(i<itemsIdList.size()){
+			tempItemList.add(itemsIdList.get(i));
+			i++;
+			if(tempItemList.size()==25){
+				
+				try {
+					ServicePort allegro = allegroWebApiService.getservicePort();
+					DoGetItemsInfoRequest itemsInfoRequest= new DoGetItemsInfoRequest();
+					
+					long[] tempItemList2=new long[25];
+					for(int k=0;k<tempItemList.size();k++){
+						tempItemList2[k]=tempItemList.get(k);
+					}
+					
+					itemsInfoRequest.setItemsIdArray(tempItemList2);
+					itemsInfoRequest.setSessionHandle(sessionHandle);
+					itemsInfoRequest.setGetDesc(1);
+					itemsInfoRequest.setGetImageUrl(1);
+					itemsInfoRequest.setGetAttribs(1);
+					itemsInfoRequest.setGetPostageOptions(0);
+					itemsInfoRequest.setGetCompanyInfo(0);
+					
+					DoGetItemsInfoResponse itemsInfoResponse= allegro.doGetItemsInfo(itemsInfoRequest);
+					ItemInfoStruct[] itemsInfoStruct= itemsInfoResponse.getArrayItemListInfo();
+					ItemInfo itemInfo;
+					AttribStruct[] itemAttribs;
+					
+					for(int l=0;l<itemsInfoStruct.length;l++){
+						itemInfo=itemsInfoResponse.getArrayItemListInfo()[l].getItemInfo();
+						itemAttribs=itemsInfoResponse.getArrayItemListInfo()[l].getItemAttribs();
+						itemInfoCreation.createItemInfo(itemInfo.getItId(),itemInfo.getItCountry(), itemInfo.getItName(), itemInfo.getItPrice(),
+								itemInfo.getItBidCount(),new Timestamp(itemInfo.getItEndingTime()*1000), itemInfo.getItSellerId(), itemInfo.getItSellerLogin(),
+								itemInfo.getItStartingPrice(), itemInfo.getItQuantity(), itemInfo.getItReservePrice(), itemInfo.getItLocation()
+								, itemInfo.getItBuyNowPrice(), itemInfo.getItDescription(), itemInfo.getItState(), itemInfo.getItHitCount(),
+								itemInfo.getItStartingQuantity(), itemInfo.getItEndingInfo(), itemInfo.getItIsNewUsed());
+				
+						for (int m=0;m<itemAttribs.length;m++){
+							for(int n=0;n<itemAttribs[m].getAttribValues().length;n++){
+								iteamAttribsCreation.createItemAttribs(itemInfo.getItId(), itemAttribs[m].getAttribName(), itemAttribs[m].getAttribValues()[n], null);
+							}
+							
+							
+						}
+						
+
+					
+					
+					
+				
+					
+					}
+					
+					
+					
+					
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				
+				
+				tempItemList.clear();
+			}
+		}
+		
+		
+		
+		
+	}
+	public void writeFile(long input) throws IOException {
+		PrintWriter printWriter = null;
+		  printWriter = new PrintWriter(new FileOutputStream("out.txt", true));
+		  printWriter.write(Long.toString(input));
+		  printWriter.println();
+		
+	 
+		  printWriter.close();
+	}
+	
 }
